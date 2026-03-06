@@ -50,12 +50,12 @@ print("I\'m" + name1)  # name1改变
 ```python
 #!/usr/bin/env python3
 print("输入两个数字后的四则运算")
-print("请输入第一个数字:")  # input()获取输入的值
-x = float(input())  # 转换为浮点数以小数运算（不转换则是字符串不能数学运算）
-print("请输入第二个数字:")
-y = float(input())
+# input()获取输入的值，提示语可以直接写在()里
+# float转换为浮点数以支持小数运算（不转换是字符串不能数学运算）
+x = float(input("请输入第一个数字:"))  
+y = float(input("请输入第二个数字:"))
 
-# +加，-减，*乘，/除，**乘方
+# +加，-减，*乘，/除，**乘方，==等于，!=不等于
 print("和")
 z = x + y
 print(round(z, 2))  # round()四舍五入到2位小数
@@ -94,6 +94,10 @@ x = "123 456"  # 指定一个字符串
 print(type(x))  # 查看数据类型
 print(len(x))  # 计算字符串长度（空格也算）
 print(x[2])  # 索引字符串的第三个字符（因为从0开始往右数）
+
+# 不同的数据类型不可以一起打印
+y = 1  # 整数
+print("str" + str(y))  # 转换为字符串才能和字符串一起打印
 ```
 
 **5、外援的package**
@@ -115,6 +119,31 @@ pip install ./package.whl  # 安装pypl下载好的本地包
 pip list
 ```
 
+**6、决断的if**
+
+if-else条件判断，可以嵌套，python通过缩进来判断属于哪个if。
+
+```python
+age = int(input("输入年龄："))  # 字符串需要转换才能用于运算
+# 嵌套写法
+if age >= 18:
+    if age >= 30:
+        print("而立。")
+    else:
+        print("未立。")
+    print("已成年。")
+else:
+    print("未成年。")
+
+# elif写法
+if age < 18:
+    print("未成年。")
+elif 18 <= age < 30:
+    print("已成年。")
+    print("未立。")
+else:
+    print("已成年。")
+    print("而立。") 
+```
+
 ~未完待续~
-
-
