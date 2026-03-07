@@ -3,7 +3,7 @@ i = 0
 total = 0
 j = -1
 while i != "q":
-    total = total + float(i)
+    total += float(i)
     i = input("请输入数字：")
     j += 1
 if j == 0:
