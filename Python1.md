@@ -59,6 +59,7 @@ y = float(input("请输入第二个数字:"))
 print("和")
 z = x + y
 print(round(z, 2))  # round()四舍五入到2位小数
+print(f"{z:.2f}")  # f-string写法，浮点数保留2位小数
 
 print("乘积")
 v = x * y
@@ -95,9 +96,40 @@ print(type(x))  # 查看数据类型
 print(len(x))  # 计算字符串长度（空格也算）
 print(x[2])  # 索引字符串的第三个字符（因为从0开始往右数）
 
-# 不同的数据类型不可以一起打印
 y = 1  # 整数
-print("str" + str(y))  # 转换为字符串才能和字符串一起打印
+print("str" + str(y))  # 整数转换为字符串才能和字符串一起打印
+print("str", y)  # 另一种解决方案，缺点是中间会出现空格
+print(f"str {y}")  # 新世纪方案f-string
+```
+
+- 列表list：类似于数组
+
+```python
+list = [0.2,"B"]  # 列表内可以共存多种数据类型,可以为空
+list.append("C")  # 为列表追加元素
+list.remove("B")  # 为列表删除元素
+list[1] = "D"  # 指定元素替换
+# 其他函数：list.max最大值,min最小值,sorted排序
+# 列表可以直接改变值，而前面的数据类型不可以
+h = "hi"
+h = h.upper()  # 大写化后需要重新赋值才改变
+print(h)
+print(h.upper()) # 如果不需要改变值，只需要打印的话
+```
+
+- 字典dict：键值对
+
+```python
+dict = {"一":"111",  # 键：值
+        "二":"222"}  # 键不可以是列表
+dict["三"] = "333"  # 为字典追加元素，若键已存在则覆写值
+del dict["二"]  # 为字典删除元素
+print("三" in dict)  # 检索键是否已存在（结果为布尔类型）
+# 对于需要同名键的情况，使用元组来让一个键包含多个元素
+# 元组同样不可变(追加/删除元素），使用()而非列表的[]
+dict2 = {("一", A):"111",
+         ("二", A):"222"}
+# 其他函数：dict.keys返回键, values返回值, items返回键值对
 ```
 
 **5、外援的package**
@@ -119,9 +151,11 @@ pip install ./package.whl  # 安装pypl下载好的本地包
 pip list
 ```
 
-**6、决断的if**
+**6、分断的if**
 
 if-else条件判断，可以嵌套，python通过缩进来判断属于哪个if。
+
+多个条件时可以使用逻辑判断：and与，or或，not非。无括号时优先级非>与>或
 
 ```python
 age = int(input("输入年龄："))  # 字符串需要转换才能用于运算
@@ -145,5 +179,73 @@ else:
     print("已成年。")
     print("而立。") 
 ```
+
+**7、遍历的for**
+
+对所有内容逐个进行操作，可以嵌套，需要缩进。
+
+```python
+print("输入最小值和最大值，对数列求和求平均值")
+a = int(input("输入最小值："))
+b = int(input("输入最大值："))
+numbers = list(range(a,b+1))  # 因为range[)，所以最大值要+1
+i = 0
+for num in numbers:
+    i = i + num
+average = i / len(numbers)
+#print("总和:" + str(i))
+#print("平均值:" + str(average))
+print(f"""总和:{i}
+平均值:{average}""")  # f-string支持三引号多行输出
+
+# 综合练习：打印九九乘法表
+for i in range(1, 10):
+    for j in range(1, i+1):
+        print(f"{j}×{i}={i*j}", end=" ")  # end=" "，用空格代替print默认换行
+    print()  # 换行，等于print(end="\n")
+
+# range(a,b,c)，取[a,b)，间隔为c（默认1，可以为负数，即递减）
+# range(b),取[0,b)
+```
+
+**8、循回的while**
+
+重复操作，直到不再满足条件，可以嵌套，需要缩进。
+
+```python
+# while求数列和（不如for简单）
+numbers = list(range(1,11))  # 从1至10
+i = 0
+total = 0
+while i < len(numbers):
+    total = total + numbers[i]
+    i = i + 1
+print(f"总和:{total}")
+
+# 但是在未知需要循环多少次时，只能使用while
+# 一些无意义的巧思（）
+print("输入任意数量的数字求和与平均值，输入q开始计算")
+i = 0
+total = 0
+j = -1  # 第一次循环都是0所以j从-1开始，用于统计输入次数
+while i != "q":
+    total = total + float(i)
+    i = input("请输入数字：")  # 第一次循环后正式开始输入
+    j += 1  # 简写j = j + 1
+if j == 0:  # 防止0作为除数报错
+    print("没有数字喵...")
+else:
+    print(f"总和:{total},平均值：{total/j}")
+
+# 另一种写法（局部）
+while True:  # 无限循环
+    i = input("请输入数字：")
+    if i == "q":  # if和else并不是锁定的，特定时候可以只写if
+        break  # 终止循环
+    total += float(i)
+    j += 1
+```
+
+
 
 ~未完待续~
