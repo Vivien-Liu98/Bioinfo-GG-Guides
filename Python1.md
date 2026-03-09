@@ -14,12 +14,10 @@ print('What is "Ah"?')  # 多重引号的区分
 print("What\'s \"Ah\"?")  # 使用\转义
 print("Emmm \n?")  # 使用\n换行
 print("""hhh
-23333
-wwww""")  # 使用"""换行，注意如果加空格对齐会导致空格也被输出
+23333""")  # 使用"""换行，注意如果加空格对齐会导致空格也被输出
 
 """
-顺便一提
-什么都不加的三个引号
+顺便一提，什么都不加的三个引号
 可以用于多行注释
 """
 ```
@@ -39,6 +37,12 @@ print("I\'m" + name1)  # 直接使用变量名
 name2 = name1  # 赋值顺序为左←右
 name1 = "vivi"  # 后赋值会覆写前面的赋值
 print("I\'m" + name1)  # name1改变
+
+#print多个变量（以换行分隔）的写法
+print(f"{msg1}\n{msg2}\n{msg3}")
+print(msg1, msg2, msg3, sep="\n")
+print(msg1 + "\n" + msg2 + "\n" + msg3)
+print("{}\n{}\n{}".format(msg1, msg2, msg3))
 ```
 
 **3、数字的calculation**
@@ -229,7 +233,7 @@ i = 0
 total = 0
 j = -1  # 第一次循环都是0所以j从-1开始，用于统计输入次数
 while i != "q":
-    total = total + float(i)
+    total += float(i)
     i = input("请输入数字：")  # 第一次循环后正式开始输入
     j += 1  # 简写j = j + 1
 if j == 0:  # 防止0作为除数报错
@@ -244,6 +248,42 @@ while True:  # 无限循环
         break  # 终止循环
     total += float(i)
     j += 1
+```
+
+**9、整顿的readability**
+
+对于长文字填空生成的整理与优化。
+
+```python
+name = ["老刘","老李","老张"]
+year = "2026"
+for bro in name:
+    blessing_msg = "祝" + bro + year + "新年快乐！"
+    print(blessing_msg)
+# 其他写法
+    blessing_msg = "祝{0}{1}新年快乐！".format(bro,year)  # 顺序，数字可不写
+    blessing_msg = "祝{bro}{yr}新年快乐！".format(bro=bro,yr=year)  #自定义
+    blessing_msg = f"祝{bro}{year}新年快乐！"  # f-string
+# format也可以直接用于其他数据类型
+```
+
+**10、创造的function**
+
+将一段代码自定义为函数便于调用，仅限同一脚本内。
+
+```python
+import random  # 借用这个包来生成随机数
+def fortune(user_input):
+    x = random.randint(1,9)  # 生成一个1-9的随机整数
+    if x < 4:
+        print(f"输入了{user_input}...抽到了末吉！")
+    elif 4 <= x < 7:
+        print(f"输入了{user_input}...抽到了中吉！")
+    else:
+        print(f"输入了{user_input}...抽到了大吉！")
+
+user_input = input("输入任意内容抽签：")
+fortune(user_input)
 ```
 
 
