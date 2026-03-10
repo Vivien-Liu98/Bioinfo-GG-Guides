@@ -8,6 +8,9 @@ def fortune(user_input):
         print(f"输入了{user_input}...抽到了中吉！")
     else:
         print(f"输入了{user_input}...抽到了大吉！")
+    return x
 
 user_input = input("输入任意内容抽签：")
-fortune(user_input)
+result=fortune(user_input)
+
+#print(f"调试用，result={result}")
