@@ -2,7 +2,7 @@
 
 > 知らない，我的分析很需要。
 
-**1、宣告的print**
+###### 1、宣告的print
 
 所有编程的第一课，使用print函数打印输出。
 
@@ -22,7 +22,7 @@ print("""hhh
 """
 ```
 
-**2、赋予的variable**
+###### 2、赋予的variable
 
 用变量来表示一个值。
 
@@ -45,7 +45,7 @@ print(msg1 + "\n" + msg2 + "\n" + msg3)
 print("{}\n{}\n{}".format(msg1, msg2, msg3))
 ```
 
-**3、数字的calculation**
+###### 3、数字的calculation
 
 在生信小教程咱写过perl的四则运算，这里是python版。
 
@@ -79,7 +79,7 @@ print(u)
 print("计算完毕\n")
 ```
 
-**4、数据的type**
+###### 4、数据的type
 
 python内的数据类型：
 
@@ -136,7 +136,7 @@ dict2 = {("一", A):"111",
 # 其他函数：dict.keys返回键, values返回值, items返回键值对
 ```
 
-**5、外援的package**
+###### 5、外援的package
 
 python本身自带一些函数，但是想实现更多功能，则需要调用包（库）。
 
@@ -155,7 +155,7 @@ pip install ./package.whl  # 安装pypl下载好的本地包
 pip list
 ```
 
-**6、分断的if**
+###### 6、分断的if
 
 if-else条件判断，可以嵌套，python通过缩进来判断属于哪个if。
 
@@ -184,7 +184,7 @@ else:
     print("而立。") 
 ```
 
-**7、遍历的for**
+###### 7、遍历的for
 
 对所有内容逐个进行操作，可以嵌套，需要缩进。
 
@@ -212,7 +212,7 @@ for i in range(1, 10):
 # range(b),取[0,b)
 ```
 
-**8、循回的while**
+###### 8、循回的while
 
 重复操作，直到不再满足条件，可以嵌套，需要缩进。
 
@@ -250,7 +250,7 @@ while True:  # 无限循环
     j += 1
 ```
 
-**9、整顿的readability**
+###### 9、整顿的readability
 
 对于长文字填空生成的整理与优化。
 
@@ -267,7 +267,7 @@ for bro in name:
 # format也可以直接用于其他数据类型
 ```
 
-**10、创造的function**
+###### 10、创造的function
 
 将一段代码自定义为函数便于调用，仅限同一脚本内。
 
@@ -294,7 +294,7 @@ print(z)  # 不可以直接打印y
 # 如果需要返回多个变量，需用多个变量分别接受，单个变量接收则会变成元组
 ```
 
-**11、对象的nonexistence**
+###### 11、对象的nonexistence
 
 之前的代码是『面向过程』编程，也就是详细描述程序每一步做什么。而『面向对象』编程则是以程序执行的对象（类）为核心，为其添加属性、方法，适用于复杂情况。
 
@@ -346,5 +346,62 @@ zhong1.exp_z()
 xi1 = XiCan("牛排",45,"好吃")
 xi1.exp_x()
 ```
+
+###### 12、文件的execution
+
+终于到文件操作了，这可能是最贴近实际工作的部分……
+
+```python
+#读取文件（换行符会被一起读进去）
+f = open("./test.txt","r")  # r只读，不写参数默认r，文件不存在则报错
+f = open("./test.txt","w")  # w写入，文件不存在则自动创建，存在则覆写
+f = open("./test.txt","a")  # a追加，在文件后追加新的内容，不存在则创建
+print(f.read())  # 以字符串读取所有内容，重复该命令会因为记忆位置打印空值
+print(f.read(10))  # 读取1-10字节，重复该命令则读取11-20字节
+print(f.readline())  # 根据换行符，逐行读取，重复该命令打印下一行
+print(f.readline(5))  # 逐行读取，但只读取前5个字符
+print(f.readlines())  # 读取所有内容，根据换行符分行储存为列表
+f.close()  # 读完记得关闭，节约内存
+with open("./test.txt") as f:  # 另一种写法，结束后自动关闭
+    print(f.read())
+
+# 练习：统计文件行数
+i = 0
+with open("./test.txt") as f:
+    text = f.readlines()
+    for line in text:
+        i += 1
+    print(i)
+
+# w和a模式都不能用read，想要同时读写需要r+模式（同时读取和追加）。
+with open("./test.txt","r+") as f:
+    f.write("123")  # 如果原文件结尾没换行符，则不会新起一行
+    f.write("\n456")  # 追加在后面，如果不手动换行则追加到同一行
+```
+
+###### 13、调试的Prediction
+
+推测可能发生的bug，并提前做出应对。
+
+```python
+try:
+    x1 = float(input("输入被除数:"))
+    x2 = float(input("输入除数:"))
+    y = x1 / x2
+except ValueError:  # 如果输入的不是数字
+    print("老大这个好像不能算喵...")
+except ZeroDivisionError:  # 如果除数是0
+    print("老大这个好像不能除喵...")
+except:  # 万法归宗（），except按顺序运行，报错一次后面的就不检测了
+    print("老大不知道发生什么了总之行不通喵...")
+else:  # 没有错误的时候执行
+    print(f"老大结果是{y}喵！")
+finally:  # 不论有无错误都执行
+    print("好困喵...")
+```
+
+
+
+
 
 ~未完待续~
