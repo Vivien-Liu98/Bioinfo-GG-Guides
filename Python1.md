@@ -292,6 +292,22 @@ def example(user_input):
 z = example(user_input)  # 返回后的值需要赋值给新的变量来使用
 print(z)  # 不可以直接打印y
 # 如果需要返回多个变量，需用多个变量分别接受，单个变量接收则会变成元组
+
+
+# 一次性使用的匿名函数lambda
+lambda x,y:x+y  # 定义
+(lambda x,y:x+y)(1,2)  # 调用
+
+# 调用函数的高阶函数
+def high_func(x,y,calc)
+    result = calc(x,y)
+    print(f"参数{x}、{y}，结果是{result}")
+def calc_plus(num)
+    return x+y
+def calc_minus(num)
+    return x-y
+# 使用方法
+high_func(1,2,clac_plus)
 ```
 
 ###### 11、对象的nonexistence
@@ -398,10 +414,42 @@ else:  # 没有错误的时候执行
     print(f"老大结果是{y}喵！")
 finally:  # 不论有无错误都执行
     print("好困喵...")
+
+
+# assert测试
+assert 1+1>2  # 后跟一个T/F结果的命令，测试不通过则程序终止
 ```
 
+另外也可以使用unittest包进行跨文件测试。
 
+```python
+# 这是正式文件plus.py
+def my_plus(x, y):
+    return x + y
+# 由于import会运行一遍该脚本，为了避免imput()干扰
+if __name__ == "__main__":  # 仅在直接运行本脚本时生效
+    x = float(input())
+    y = float(input())
+    z = my_plus(x, y)
+    print(f"结果是{z}")
 
+# 这是测试文件test.py(和上述文件在同一目录)
+import unittest
+from plus import my_plus  # 从文件中调用要测试的函数
+class TestPlus(unittest.TestCase):  # 通过父类继承unittest的函数
+    def test_1(self):  # 该包自动检测test_开头的功能进行测试
+        self.assertEqual(my_plus(1,2),3)  # 和assert不同，不通过也会继续运行
+    def test_2(self):
+        self.assertEqual(my_plus(1,-2),-1)  # 测试时手动定义输入的变量值
+# 使用方法
+python -m unittest  # 自动检测目录下所有test_
+# 运行结果是输出一串.(通过)或F(不通过)。直接运行测试脚本则无结果
 
+# 如果要使用重复的测试内容，可以先定义好
+    def setUp(self):
+        self.testplus = my_plus(4,5)
+    def test_3(self):
+        self.assertEqual(self.testplus,9) 
+```
 
-~未完待续~
+~次回予告：numpy&pandas~
