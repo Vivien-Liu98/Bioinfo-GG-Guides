@@ -1,6 +1,6 @@
-# Python1
+# Python1 Base
 
-> 知らない，我的分析很需要。
+> 星が誕生する前夜
 
 ###### 1、宣告的print
 
@@ -384,8 +384,7 @@ with open("./test.txt") as f:  # 另一种写法，结束后自动关闭
 # 练习：统计文件行数
 i = 0
 with open("./test.txt") as f:
-    text = f.readlines()
-    for line in text:
+    for line in f:  # 不用line，用其他变量名也可以
         i += 1
     print(i)
 
