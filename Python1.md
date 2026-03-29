@@ -425,7 +425,7 @@ assert 1+1>2  # 后跟一个T/F结果的命令，测试不通过则程序终止
 # 这是正式文件plus.py
 def my_plus(x, y):
     return x + y
-# 由于import会运行一遍该脚本，为了避免imput()干扰
+# 由于import会运行一遍该脚本，为了避免input()干扰
 if __name__ == "__main__":  # 仅在直接运行本脚本时生效
     x = float(input())
     y = float(input())

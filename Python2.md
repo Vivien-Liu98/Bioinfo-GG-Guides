@@ -89,4 +89,92 @@ arr3 = np.array([[[1,5],[2,6]],[[3,7],[4,8]]])
 # [array([[[1],[2]],[[3],[4]]]), array([[[5],[6]],[[7],[8]]])]
 ```
 
+数组的查找与筛选。
+
+```python
+# 排序
+arr = np.array([3, 1, 0, 2])  # 字符串（字母）、布尔（FT）也可以被排序
+print(np.sort(arr))  # 原始数组没有改变
+# 2维数组排序是分别排[[1, 0], [3, 2]]→[[0, 1], [2, 3]]
+
+# 查找
+arr = np.array([1, 1, 3, 3, 5, 7])
+x = np.where(arr == 3)  # 查找元素位置，结果是元组(array([2, 3]),)
+x1 = np.where(arr%2 == 0)  # 查找奇数
+x2 = np.where(arr%2 == 1)  # 查找偶数
+# 对于已排序的数组，查找指定元素可按顺序插入的位置
+y = np.searchsorted(arr, 4, side='left')  # 结果为4，可指定从左还是右计
+y1 = np.searchsorted(arr, [2, 4, 6])  # 结果为[2 4 5]，支持多个查找
+
+# 筛选（本质是指定T/F来筛选)
+arr = np.array([1, 2, 3, 4])
+filter_arr = []  # 建立一个空数组用于存放筛选的TF
+for element in arr:  # 循环判断
+  if element > 2:
+    filter_arr.append(True)
+  else:
+    filter_arr.append(False)
+newarr = arr[filter_arr]  # 使用TF数组过滤原数组
+print(filter_arr)
+print(newarr)
+
+# 另一种方法
+filter_arr = arr > 2
+newarr = arr[filter_arr]
+```
+
+###### 2、随机random
+
+如果随机数由程序算法生成，那么其可预测，属于伪随机。
+
+```python
+from numpy import random  
+x=random.rand(5)  # 随机数组，5个0-1随机浮点数
+x=random.randint(100, size=(5))  # 随机数组，5个0-100随机整数
+x=random.rand(3, 5)  # 随机2维数组，3*5
+x=random.choice([3, 5, 7, 9], size=(3, 5))  # 可以手动指定随机值的范围
+x=random.choice([0, 1, 2], p=[0.5, 0.5, 0.0], size=(10))  # 指定出现概率
+random.shuffle(arr)  # 随机打乱顺序（修改原始数组）
+print(random.permutation(arr))  # 随机打乱顺序（不修改原始数组）
+```
+
+绘制图表，其中seaborn包安装时自动安装matplotlib.pyplot。
+
+```python
+import matplotlib.pyplot as plt
+import seaborn as sns
+sns.displot([0, 1, 2, 3, 4, 5])  # 直方图
+plt.show()
+sns.displot([0, 1, 2, 3, 4, 5], kind="kde")  # 曲线图
+plt.show()
+```
+
+###### 3、分布distribution
+
+通过随机功能，生成符合特定分布的数据。
+
+```python
+# 正态分布
+x = random.normal(loc=1, scale=2, size=(2, 3))  # 均值1,标准差2
+sns.displot(random.normal(size=1000), kind="kde")  # 可视化绘图
+
+# 二项分布(抛硬币)
+x = random.binomial(n=10, p=0.5, size=10)  # 10次试验，重复10次
+sns.displot(random.binomial(n=10, p=0.5, size=1000)) 
+# 区别在于正态分布是连续的，而二项分布是离散的。但数据够多，后者和前者相似
+
+# 泊松分布（事件在单位时间内随机发生的次数）
+x = random.poisson(lam=2, size=10)  # 发生2次
+sns.displot(random.poisson(lam=2, size=1000))
+# 同样是离散，但数据够多时会类似于具有一定标准差和均值的正态分布
+# n极大而p≈0时，与二项分布非常接近，n*p≈lam
+
+# 均匀分布（每个事件发生概率均等）
+x = random.uniform(size=(2, 3))  # 下限low默认0，上限high默认1
+sns.displot(random.uniform(size=10000), kind="kde")
+# 图是不规则的波浪线，数据越多越趋近平滑
+```
+
+
+
 ~未完待续~
