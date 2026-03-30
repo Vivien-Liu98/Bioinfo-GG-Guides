@@ -163,18 +163,48 @@ x = random.binomial(n=10, p=0.5, size=10)  # 10次试验，重复10次
 sns.displot(random.binomial(n=10, p=0.5, size=1000)) 
 # 区别在于正态分布是连续的，而二项分布是离散的。但数据够多，后者和前者相似
 
+# 多项分布（二项亚种，抛骰子）
+x = random.multinomial(n=6, pvals=[1/6]*6)  # 也可以概率不均等
+# 注意，返回的结果是所有结果出现的次数。即骰子1-6出现的次数
+
 # 泊松分布（事件在单位时间内随机发生的次数）
 x = random.poisson(lam=2, size=10)  # 发生2次
 sns.displot(random.poisson(lam=2, size=1000))
 # 同样是离散，但数据够多时会类似于具有一定标准差和均值的正态分布
 # n极大而p≈0时，与二项分布非常接近，n*p≈lam
 
+# 指数分布（描述下一次事件发生的时间）
+x = random.exponential(scale=2, size=(2, 3))  # scale 速率的倒数
+sns.displot(random.exponential(size=1000), kind="kde")
+# 区别在于泊松分布是在一段时间内事件发生的次数，指数分布是事件之间的时间间隔。
+
+# 卡方分布（假设检验）
+x = random.chisquare(df=2, size=(2, 3))  # 自由度2
+sns.displot(random.chisquare(df=1, size=1000), kind="kde")
+# 由于平方只有正值使曲线右偏，可理解为大量小偏差和少量大偏差
+# 自由度越高越接近正态分布
+
 # 均匀分布（每个事件发生概率均等）
 x = random.uniform(size=(2, 3))  # 下限low默认0，上限high默认1
 sns.displot(random.uniform(size=10000), kind="kde")
 # 图是不规则的波浪线，数据越多越趋近平滑
+
+# 逻辑分布（来自S型增长函数）
+x = random.logistic(loc=1, scale=2, size=(2, 3))  # 均值1，标准差2
+# 比正态分布更容易出现极端值的钟形分布
+
+
+# Rayleigh分布（二维随机长度波动）
+x = random.rayleigh(scale=2, size=(2, 3))
+# 理解为在平面上随机抖动（x方向 + y方向）→ 到原点的距离。例如无线信号、风速等。
+
+# Pareto 分布（少数支配多数）
+x = random.pareto(a=2, size=(2, 3))
+# 例如80%财富由20%人拥有
+
+# Zipf分布（排名规律）
+x = random.zipf(a=2, size=(2, 3))
+# 第k名的频率 ≈ 1/k，例如词频，网站访问量等。Pareto的离散版。
 ```
-
-
 
 ~未完待续~
