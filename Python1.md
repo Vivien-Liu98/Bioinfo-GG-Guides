@@ -451,4 +451,4 @@ python -m unittest  # 自动检测目录下所有test_
         self.assertEqual(self.testplus,9) 
 ```
 
-~次回予告：numpy&pandas~
+~次回予告：numpy~

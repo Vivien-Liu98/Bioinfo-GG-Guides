@@ -207,4 +207,87 @@ x = random.zipf(a=2, size=(2, 3))
 # 第k名的频率 ≈ 1/k，例如词频，网站访问量等。Pareto的离散版。
 ```
 
-~未完待续~
+###### 4、运算operation
+
+numpy内置函数ufunc，可以直接对数组进行运算。
+
+```python
+# 四则运算
+arr1 = np.array([1, 2, 3])
+arr2 = np.array([4, 5, 6])
+newarr = np.absolute(arr1)  # 取绝对值
+newarr = np.add(arr1, arr2)  # 加法，返回[5 7 9]
+newarr = np.subtract(arr2, arr1)  # 减法，返回[3 3 3]
+newarr = np.multiply(arr1, arr2)  # 乘法，返回[4 10 18]
+newarr = np.divide(arr2, arr1)  # 除法，返回[4. 2.5 2.]
+newarr = np.power(arr1, arr2)  # 指数，返回[1 32 729]
+newarr = np.divmod(arr2, arr1)  # 除法并保留余数
+# 返回(array([4, 2, 2]), array([0, 1, 0]))，商和余数
+# 单纯需要余数可以使用np.mod或np.remainder
+
+# 其他
+newarr = np.sum([arr1, arr2])  # 全部相加，返回21
+newarr = np.sum([arr1, arr2], axis=1)  # 沿行求和，返回[6 15]
+newarr = np.cumsum(arr1)  # 逐个累加，返回[1 3 6]
+newarr = np.prod([arr1, arr2])  # 全部相乘，返回720。axis=1同上
+newarr = np.cumprod(arr1)  # 逐个累乘，返回[1 2 6]
+newarr = np.diff(arr2)  # 逐个相减，返回[1 1]，注意是后面减前面所以第一个没有
+newarr = np.diff(arr, n=2)  # 重复执行2次，1-1=[0]
+
+# 去零
+arr = np.trunc([-3.1666, 3.6667])  # 直接去掉小数，返回[-3. 3.]
+arr = np.around(3.1666, 2)  # 四舍五入，保留2位，返回3.17
+arr = np.floor([-3.1666, 3.6667])  # 向下取整，返回[-4.  3.]
+arr = np.ceil([-3.1666, 3.6667])  #  向上取整，返回[-3.  4.]
+
+# 对数
+arr = np.arange(1, 10)  # 等于[1 2 3 4 5 6 7 8 9]
+print(np.log2(arr))  # 底数2。np.log10(arr)底数10, np.log(arr)底数e
+# 由于np不支持自由指定底数，有两种解决方案
+from math import log
+log(100, 15)  # 后面的才是底数
+np.log([100, 1000, 10000]) / np.log(15)  # 或者用对数换底公式
+
+# 公数
+x = np.lcm(4, 6)  # 最小公倍数，返回12
+x = np.lcm.reduce([3, 6, 9])  # 最小公倍数（数组），返回18，会将数组降1维
+x = np.gcd(4, 6)  # 最小公约数，返回2
+x = np.gcd.reduce([3, 6, 9])  # 同样的数组版本，返回3
+
+# 三角函数
+arr = np.array([np.pi/2, np.pi/3, np.pi/4])  # np.pi = π
+x = np.sin(arr)  # 正弦（其余同理）
+arr = np.array([90, 180, 270, 360])  # 角度
+x = np.deg2rad(arr)  # 转化为弧度
+arr = np.array([np.pi/2, np.pi, 1.5*np.pi, 2*np.pi])  # 弧度
+x = np.rad2deg(arr)  # 转化为角度
+x = np.arcsin([1, -1, 0.1])  # 已知三角函数值求角度（其余同理）
+x = np.hypot(3, 4)  # 勾股定理求斜边长度
+# 双曲函数同理，np.sinh(np.pi/2)，np.arcsinh(1.0)，cosh、tanh
+
+# 集合（仅限一维数组）
+arr1 = np.array([1, 2, 3, 3])
+arr2 = np.array([3, 4, 5, 6])
+x = np.unique(arr1)  # 寻找唯一元素
+x = np.union1d(arr1, arr2)  # 并集
+x = np.intersect1d(arr1, arr2, assume_unique=True)  # 交集，参数用于加速运算
+x = np.setdiff1d(arr1, arr2, assume_unique=True)  # 1存在2不存在的元素
+x = np.setxor1d(arr1, arr2, assume_unique=True)  # 1和2中的特有元素
+```
+
+此外，也可以手动定义ufunc从而进行数组运算，即自动循环整个数组。
+
+```python
+import numpy as np
+def myadd(x, y):
+  return x+y
+myadd = np.frompyfunc(myadd, 2, 1)  # 函数名，输入参数数量，输出数组数量
+print(myadd([1, 2], [3, 4]))  # 返回[4 6]
+# 如果不定义ufunc，则返回[1 2 3 4]，不进行数组运算，仅拼接列表
+# 但是这种方法运算较慢，建议还是用np.add
+
+# 判断类型
+print(type(np.add))  # <class 'numpy.ufunc'>
+```
+
+~次回予告：pandas~
