@@ -4,26 +4,10 @@
 
 ###### 1、数组array
 
-Pandas包是针对数据集清洗、处理和分析的包。
+Pandas包是针对数据集清洗、处理和分析的包。其内部的数据由系列Series（列）和数据表DataFrames（表格）构成。
 
 ```python
 import pandas as pd
-# 从文件导入数据
-df = pd.read_csv('data.csv')  # 读取csv文件
-print(df.to_string())  # 打印文件内容
-
-# 手动输入数据
-mydataset = {
-  'cars': ["A", "B", "C"],
-  'passings': [1, 2, 3]
-}
-myvar = pd.DataFrame(mydataset)
-print(myvar)
-```
-
-Pandas的数据由系列（列）和数据表（表格）构成。
-
-```python
 # 系列
 a = [1, 2, 3]
 myvar = pd.Series(a)  # 转换为系列
@@ -33,7 +17,33 @@ calories = {"day1": 10, "day2": 20, "day3": 30}  # 字典
 myvar = pd.Series(calories)  # 字典的键自动成为标签
 myvar = pd.Series(calories, index = ["day1", "day2"])  # 只使用部分字典
 
+# 数据表
+data = {
+  "calories": [420, 380, 390],  # 第一列行名+内容
+  "duration": [50, 40, 45]  # 第二列行名+内容
+}
+df = pd.DataFrame(data)  # 注意，生成的表格第0列为行号（索引）
+print(df.loc[0])  # 返回指定行（是系列）
+print(df.loc[[0, 1]])  # 返回指定行（是数据表）
+df = pd.DataFrame(data, index = ["day1", "day2", "day3"])  # 自定义索引
 ```
+
+pandas可以读取文件从而获得数据。
+
+```python
+# csv文件（逗号分割的纯文本文件）
+import pandas as pd
+df = pd.read_csv('data.csv')  # 读取
+print(df.to_string())   # to_string打印完整数据表
+print(df)  # 对大表格默认只打印标题行和前5+后5行
+pd.options.display.max_rows = 100  # 修改打印阈值，行数超过该值则只打印前后5行
+
+# json文件（具有对象格式的纯文本文件）
+df = pd.read_json('data.json')  # 读取
+print(df.to_string()) 
+```
+
+
 
 
 
